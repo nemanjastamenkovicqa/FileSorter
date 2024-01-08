@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.Arrays;
 public class FileSorter {
 
 
@@ -73,7 +74,8 @@ public class FileSorter {
         sortFiles(directoryPath);
 
         // Optionally, add the following lines to perform recursive sorting
-        RecursiveFileSorter recursiveFileSorter = new RecursiveFileSorter();
+        RecursiveFileSorter recursiveFileSorter = new RecursiveFileSorter(Arrays.asList("txt", "pdf", "jpg"));
+
         recursiveFileSorter.sortFilesRecursive(directoryPath);
     }
 }
