@@ -5,8 +5,11 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.io.IOException;
+import java.nio.file.*;
 public class FileSorter {
+
+
 
     public static void sortFiles(String directoryPath) {
         File directory = new File(directoryPath);
@@ -68,5 +71,9 @@ public class FileSorter {
 
         // Call the sortFiles method
         sortFiles(directoryPath);
+
+        // Optionally, add the following lines to perform recursive sorting
+        RecursiveFileSorter recursiveFileSorter = new RecursiveFileSorter();
+        recursiveFileSorter.sortFilesRecursive(directoryPath);
     }
 }
