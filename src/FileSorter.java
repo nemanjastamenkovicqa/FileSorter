@@ -73,6 +73,10 @@ public class FileSorter {
         // Call the sortFiles method
         sortFiles(directoryPath);
 
+        // Create an instance of FileSorter or DuplicateFileHandler and perform necessary operations
+        FileSorter fileSorter = new FileSorter();
+        fileSorter.sortFiles(directoryPath);
+
         // Optionally, add the following lines to perform recursive sorting
         RecursiveFileSorter recursiveFileSorter = new RecursiveFileSorter(Arrays.asList("txt", "pdf", "jpg"));
 
