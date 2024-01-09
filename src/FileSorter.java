@@ -77,6 +77,12 @@ public class FileSorter {
         FileSorter fileSorter = new FileSorter();
         fileSorter.sortFiles(directoryPath);
 
+        // Create an instance of UserInteractionHandler
+        UserInteractionHandler userInteractionHandler = new UserInteractionHandler();
+
+        // Call the sortFilesWithUserInteraction method
+        userInteractionHandler.sortFilesWithUserInteraction(directoryPath);
+
         // Optionally, add the following lines to perform recursive sorting
         RecursiveFileSorter recursiveFileSorter = new RecursiveFileSorter(Arrays.asList("txt", "pdf", "jpg"));
 
