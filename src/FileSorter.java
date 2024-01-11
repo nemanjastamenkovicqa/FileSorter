@@ -65,7 +65,7 @@ public class FileSorter {
 
         System.out.println("Files sorted successfully!");
     }
-
+// command for storing data
     public static void main(String[] args) {
         // Specify the directory path you want to sort
         String directoryPath = "path/to/your/directory"; // Replace with your desired directory path
