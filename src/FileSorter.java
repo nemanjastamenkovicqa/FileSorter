@@ -65,25 +65,11 @@ public class FileSorter {
 
         System.out.println("Files sorted successfully!");
     }
-    /*
 
-    private void filterAndMoveFile(File file, File destinationDir) {
-        String fileName = file.getName();
-        int dotIndex = fileName.lastIndexOf('.');
-        if (dotIndex != -1) {
-            String fileExtension = fileName.substring(dotIndex + 1).toLowerCase();
-            if (allowedFileTypes.contains(fileExtension)) {
-                try {
-                    Files.move(file.toPath(), destinationDir.toPath().resolve(file.toPath()), StandardCopyOption.REPLACE_EXISTING);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-     */
-// command for storing data
     public static void main(String[] args) {
+
+        //It needs a menu or UI
+
         // Specify the directory path you want to sort
         String directoryPath = "path/to/your/directory"; // Replace with your desired directory path
 
