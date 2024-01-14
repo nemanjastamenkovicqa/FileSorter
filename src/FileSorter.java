@@ -68,6 +68,9 @@ public class FileSorter {
 
     public static void main(String[] args) {
 
+        // Create an instance of FileTypeSummaryHandler
+        FileTypeSummaryHandler fileTypeSummaryHandler = new FileTypeSummaryHandler();
+
         //It needs a menu or UI
 
         // Specify the directory path you want to sort
