@@ -11,12 +11,31 @@ public class FileCounter {
             return 0;
         }
 
-        // Get a list of files in the directory
+        // Count and return the number of files, including subdirectories
+        int fileCount = countFilesRecursive(directory);
+        System.out.println("Total number of files in the directory and its subdirectories: " + fileCount);
+        return fileCount;
+    }
+
+    private int countFilesRecursive(File directory) {
         File[] files = directory.listFiles();
 
-        // Count and return the number of files
-        int fileCount = (files != null) ? files.length : 0;
-        System.out.println("Total number of files in the directory: " + fileCount);
-        return fileCount;
+        // Base case: directory is empty or null
+        if (files == null) {
+            return 0;
+        }
+
+        int count = 0;
+
+        for (File file : files) {
+            if (file.isFile()) {
+                count++;
+            } else if (file.isDirectory()) {
+                // Recursive call for subdirectories
+                count += countFilesRecursive(file);
+            }
+        }
+
+        return count;
     }
 }
