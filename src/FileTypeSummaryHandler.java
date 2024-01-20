@@ -47,14 +47,4 @@ public class FileTypeSummaryHandler {
         return (dotIndex == -1) ? "Unknown" : fileName.substring(dotIndex + 1).toLowerCase();
     }
 
-    public static void main(String[] args) {
-        // Example usage:
-        String directoryPath = "path/to/your/directory"; // Replace with your desired directory path
-
-        // Create an instance of FileTypeSummaryHandler
-        FileTypeSummaryHandler fileTypeSummaryHandler = new FileTypeSummaryHandler();
-
-        // Generate and display the file type summary
-        fileTypeSummaryHandler.generateFileTypeSummary(directoryPath);
-    }
 }

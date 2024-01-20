@@ -46,15 +46,4 @@ public class FileDeletionHandler {
             System.out.println("Failed to delete: " + file.getAbsolutePath());
         }
     }
-
-    public static void main(String[] args) {
-        // Example usage:
-        String directoryPath = "path/to/your/directory"; // Replace with your desired directory path
-
-        // Create an instance of FileDeletionHandler
-        FileDeletionHandler fileDeletionHandler = new FileDeletionHandler();
-
-        // Delete files in the specified directory with user confirmation
-        fileDeletionHandler.deleteFiles(directoryPath);
-    }
 }
