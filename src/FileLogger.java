@@ -1,6 +1,8 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -19,6 +21,16 @@ public class FileLogger {
             writer.write(logEntry);
             writer.newLine();
             System.out.println("Logged: " + logEntry);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void clearLogFile() {
+        try {
+            // Clear the contents of the log file
+            Files.write(Path.of(logFilePath), new byte[0]);
+            System.out.println("Log file cleared.");
         } catch (IOException e) {
             e.printStackTrace();
         }
