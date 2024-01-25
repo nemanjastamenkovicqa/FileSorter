@@ -9,7 +9,7 @@ public class FileDeletionHandler {
         this.scanner = new Scanner(System.in);
     }
 
-    public void deleteFiles(String directoryPath) {
+    public void deleteFilesAndEmptyDirectories(String directoryPath) {
         File directory = new File(directoryPath);
 
         // Check if the provided path is a directory
@@ -18,23 +18,40 @@ public class FileDeletionHandler {
             return;
         }
 
-        // Get a list of files in the directory
+        // Delete files and empty directories in the directory with user confirmation
+        deleteFilesAndEmptyDirectoriesRecursive(directory);
+    }
+
+    private void deleteFilesAndEmptyDirectoriesRecursive(File directory) {
         File[] files = directory.listFiles();
 
-        // Delete each file in the directory with user confirmation
-        if (files != null) {
-            for (File file : files) {
-                if (file.isFile()) {
-                    if (getUserConfirmation(file)) {
-                        deleteFile(file);
-                    }
+        // Base case: directory is empty or null
+        if (files == null) {
+            return;
+        }
+
+        for (File file : files) {
+            if (file.isDirectory()) {
+                // Recursive call for subdirectories
+                deleteFilesAndEmptyDirectoriesRecursive(file);
+            } else {
+                // Delete files with user confirmation
+                if (getUserConfirmation(file)) {
+                    deleteFile(file);
                 }
+            }
+        }
+
+        // Delete empty directory with user confirmation
+        if (directory.listFiles() == null || directory.listFiles().length == 0) {
+            if (getUserConfirmation(directory)) {
+                deleteDirectory(directory);
             }
         }
     }
 
     private boolean getUserConfirmation(File file) {
-        System.out.print("Do you want to delete the file " + file.getName() + "? (y/n): ");
+        System.out.print("Do you want to delete the file/directory " + file.getName() + "? (y/n): ");
         String userChoice = scanner.nextLine().trim().toLowerCase();
         return userChoice.equals("y");
     }
@@ -44,6 +61,14 @@ public class FileDeletionHandler {
             System.out.println("Deleted: " + file.getAbsolutePath());
         } else {
             System.out.println("Failed to delete: " + file.getAbsolutePath());
+        }
+    }
+
+    private void deleteDirectory(File directory) {
+        if (directory.delete()) {
+            System.out.println("Deleted directory: " + directory.getAbsolutePath());
+        } else {
+            System.out.println("Failed to delete directory: " + directory.getAbsolutePath());
         }
     }
 }
