@@ -1,4 +1,5 @@
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -7,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class FileLogger {
+
+    private static final long MAX_LOG_FILE_SIZE_BYTES = 1024 * 1024; // 1 MB
 
     private String logFilePath;
 
@@ -33,12 +36,34 @@ public class FileLogger {
     }
 
     private void logEntry(String logLevel, String message) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFilePath, true))) {
+        try {
+            // Check log file size and create a new log file if it exceeds the maximum size
+            checkAndRotateLogFile();
+
             // Append the current timestamp, log level, and action to the log file
-            String logEntry = getCurrentTimestamp() + " [" + logLevel + "] - " + message;
-            writer.write(logEntry);
-            writer.newLine();
-            System.out.println("Logged: " + logEntry);
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFilePath, true))) {
+                String logEntry = getCurrentTimestamp() + " [" + logLevel + "] - " + message;
+                writer.write(logEntry);
+                writer.newLine();
+                System.out.println("Logged: " + logEntry);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void checkAndRotateLogFile() {
+        try {
+            // Check log file size
+            File logFile = new File(logFilePath);
+            if (logFile.exists() && logFile.length() > MAX_LOG_FILE_SIZE_BYTES) {
+                // Create a new log file with a timestamp in the filename
+                String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                String rotatedLogFilePath = logFilePath.replace(".txt", "_" + timestamp + ".txt");
+
+                Files.move(Path.of(logFilePath), Path.of(rotatedLogFilePath));
+                System.out.println("Log file rotated. Created new log file: " + rotatedLogFilePath);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -61,5 +86,8 @@ public class FileLogger {
 
         // Log an error
         fileLogger.logError("Failed to execute sorting operation");
+
+        // Clear the log file
+        fileLogger.clearLogFile();
     }
 }
