@@ -15,15 +15,11 @@ public class FileLogger {
     }
 
     public void logAction(String action) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFilePath, true))) {
-            // Append the current timestamp and action to the log file
-            String logEntry = getCurrentTimestamp() + " - " + action;
-            writer.write(logEntry);
-            writer.newLine();
-            System.out.println("Logged: " + logEntry);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        logEntry("INFO", action);
+    }
+
+    public void logError(String errorMessage) {
+        logEntry("ERROR", errorMessage);
     }
 
     public void clearLogFile() {
@@ -36,8 +32,34 @@ public class FileLogger {
         }
     }
 
+    private void logEntry(String logLevel, String message) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFilePath, true))) {
+            // Append the current timestamp, log level, and action to the log file
+            String logEntry = getCurrentTimestamp() + " [" + logLevel + "] - " + message;
+            writer.write(logEntry);
+            writer.newLine();
+            System.out.println("Logged: " + logEntry);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private String getCurrentTimestamp() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return dateFormat.format(new Date());
+    }
+
+    public static void main(String[] args) {
+        // Example usage:
+        String logFilePath = "path/to/your/log/file.txt"; // Replace with your desired log file path
+
+        // Create an instance of FileLogger
+        FileLogger fileLogger = new FileLogger(logFilePath);
+
+        // Log an action
+        fileLogger.logAction("Performed sorting operation");
+
+        // Log an error
+        fileLogger.logError("Failed to execute sorting operation");
     }
 }
