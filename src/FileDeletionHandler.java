@@ -43,10 +43,8 @@ public class FileDeletionHandler {
         }
 
         // Delete empty directory with user confirmation
-        if (directory.listFiles() == null || directory.listFiles().length == 0) {
-            if (getUserConfirmation(directory)) {
-                deleteDirectory(directory);
-            }
+        if (isEmptyDirectory(directory) && getUserConfirmation(directory)) {
+            deleteDirectory(directory);
         }
     }
 
@@ -62,6 +60,10 @@ public class FileDeletionHandler {
         } else {
             System.out.println("Failed to delete: " + file.getAbsolutePath());
         }
+    }
+
+    private boolean isEmptyDirectory(File directory) {
+        return directory.listFiles() == null || directory.listFiles().length == 0;
     }
 
     private void deleteDirectory(File directory) {
