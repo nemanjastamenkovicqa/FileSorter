@@ -38,6 +38,9 @@ public class FileTypeSummaryHandler {
             for (Map.Entry<String, Integer> entry : fileTypeCount.entrySet()) {
                 System.out.println(entry.getKey() + ": " + entry.getValue() + " files");
             }
+
+            // Display the most common file type
+            System.out.println("Most Common File Type: " + getMostCommonFileType());
         }
     }
 
@@ -47,4 +50,28 @@ public class FileTypeSummaryHandler {
         return (dotIndex == -1) ? "Unknown" : fileName.substring(dotIndex + 1).toLowerCase();
     }
 
+    private String getMostCommonFileType() {
+        String mostCommonFileType = "Unknown";
+        int maxCount = 0;
+
+        for (Map.Entry<String, Integer> entry : fileTypeCount.entrySet()) {
+            if (entry.getValue() > maxCount) {
+                maxCount = entry.getValue();
+                mostCommonFileType = entry.getKey();
+            }
+        }
+
+        return mostCommonFileType;
+    }
+
+    public static void main(String[] args) {
+        // Example usage:
+        String directoryPath = "path/to/your/directory"; // Replace with your desired directory path
+
+        // Create an instance of FileTypeSummaryHandler
+        FileTypeSummaryHandler fileTypeSummaryHandler = new FileTypeSummaryHandler();
+
+        // Generate and display the file type summary
+        fileTypeSummaryHandler.generateFileTypeSummary(directoryPath);
+    }
 }
